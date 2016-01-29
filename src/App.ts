@@ -13,7 +13,7 @@ import {LoadTodosAction, AddTodoAction, StartBackendAction, EndBackendAction, Ac
 import {List} from "immutable";
 import {bootstrap} from "angular2/platform/browser";
 import {initialState, dispatcher, state} from "./di-tokens";
-import {initialUiState} from "./state/todoReducers";
+import {initialUiState, UiState} from "./state/todoReducers";
 import {Subject} from "rxjs/Subject";
 import {applicationStateFactory} from "./state/applicationStateFactory";
 import {Observable} from "rxjs/Observable";
@@ -36,7 +36,7 @@ import 'rxjs/add/operator/map';
 
             </section>
             <footer id="info">
-                <p>{{store.getState().uiState.message}}</p>
+                <p>{{uiState.message}}</p>
                 <p>Add, Remove and Complete TODOs</p>
             </footer>
         </div>
@@ -45,6 +45,7 @@ import 'rxjs/add/operator/map';
 export class App {
 
     todos: List<Todo> = List([]);
+    private uiState: UiState = initialUiState;
 
     constructor(@Inject(dispatcher) private dispatcher: Observer<Action>,
                 @Inject(state) private state: Observable<ApplicationState>,
@@ -64,6 +65,7 @@ export class App {
         state.subscribe(
             state => {
                 this.todos = state.todos;
+                this.uiState = state.uiState;
                 console.log(state);
             }
         );
