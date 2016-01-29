@@ -19,6 +19,7 @@ import {applicationStateFactory} from "./state/applicationStateFactory";
 import {Observable} from "rxjs/Observable";
 import {ApplicationState} from "./state/application-state";
 import {Observer} from "rxjs/Observer";
+import 'rxjs/add/operator/map';
 
 @Component({
     selector: 'app',
