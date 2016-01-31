@@ -4,7 +4,7 @@ import {Todo} from "../Todo";
 import {ADD_TODO,DELETE_TODO,LOAD_TODOS, TOGGLE_TODO, BACKEND_ACTION_STARTED,BACKEND_ACTION_FINISHED} from './todoActions';
 import {UiState, initialUiState} from "./ui-state";
 
-function todos(state: List<Todo>, action) {
+export function calculateTodos(state: List<Todo>, action) {
     if (!state) {
         return List([]);
     }

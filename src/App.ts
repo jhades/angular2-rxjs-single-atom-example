@@ -19,6 +19,7 @@ import {Observable} from "rxjs/Observable";
 import {ApplicationState} from "./state/application-state";
 import {Observer} from "rxjs/Observer";
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/scan';
 import {UiState, initialUiState} from "./state/ui-state";
 
 @Component({
