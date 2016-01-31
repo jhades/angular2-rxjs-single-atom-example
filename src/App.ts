@@ -21,6 +21,7 @@ import {Observer} from "rxjs/Observer";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/scan';
 import {UiState, initialUiState} from "./state/ui-state";
+import './getName';
 
 @Component({
     selector: 'app',
@@ -67,7 +68,6 @@ export class App {
             state => {
                 this.todos = state.todos;
                 this.uiState = state.uiState;
-                console.log(state);
             }
         );
     }

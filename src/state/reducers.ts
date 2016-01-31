@@ -1,25 +1,31 @@
 
 import {List} from 'immutable';
 import {Todo} from "../Todo";
-import {ADD_TODO,DELETE_TODO,LOAD_TODOS, TOGGLE_TODO, BACKEND_ACTION_STARTED,BACKEND_ACTION_FINISHED} from './todoActions';
+import {
+    LoadTodosAction, AddTodoAction, ToggleTodoAction, DeleteTodoAction, StartBackendAction, EndBackendAction
+} from './todoActions';
 import {UiState, initialUiState} from "./ui-state";
 
 export function calculateTodos(state: List<Todo>, action) {
     if (!state) {
         return List([]);
     }
-    switch(action.type) {
-        case LOAD_TODOS:
-            return List(action.todos);
-        case ADD_TODO:
-            return state.push(action.newTodo);
-        case TOGGLE_TODO:
-            return toggleTodo(state, action);
-        case DELETE_TODO:
-            let index = state.findIndex((todo) => todo.id === action.todo.id);
-            return state.delete(index);
-        default:
-            return state;
+
+    if (action instanceof  LoadTodosAction) {
+        return List(action.todos);
+    }
+    else if (action instanceof AddTodoAction) {
+        return state.push(action.newTodo);
+    }
+    else if (action instanceof ToggleTodoAction) {
+        return toggleTodo(state, action);
+    }
+    else if (action instanceof DeleteTodoAction) {
+        let index = state.findIndex((todo) => todo.id === action.todo.id);
+        return state.delete(index);
+    }
+    else {
+        return state;
     }
 }
 
@@ -33,11 +39,14 @@ function uiState(state: List<Todo>, action) {
     if (!state) {
         return initialUiState;
     }
-    switch(action.type) {
-        case BACKEND_ACTION_STARTED:
-            return new UiState(true, action.message);
-        case BACKEND_ACTION_FINISHED:
-            default:
-            return new UiState(false, action.message ? action.message : initialUiState.message);
+
+    if (action instanceof StartBackendAction) {
+        return new UiState(true, action.message);
+    }
+    else if (action instanceof EndBackendAction) {
+        return new UiState(false, action.message ? action.message : initialUiState.message);
+    }
+    else {
+        return state;
     }
 }
