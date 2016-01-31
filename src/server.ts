@@ -4,6 +4,9 @@
 let express = require('express');
 let bodyParser = require('body-parser');
 let _ = require('lodash');
+var httpProxy = require('http-proxy');
+
+var proxy = httpProxy.createProxyServer();
 
 let app = express();
 
@@ -36,6 +39,12 @@ app.route('/todo')
         console.log(JSON.stringify(todos));
         setTimeout(() => res.send(), 500);
     });
+
+app.all('/bundle.js', function (req, res) {
+    proxy.web(req, res, {
+        target: 'http://localhost:8081'
+    });
+});
 
 let server = app.listen(8080, function() {
     console.log("Server running at http://localhost:" + server.address().port);
