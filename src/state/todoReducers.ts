@@ -2,6 +2,7 @@
 import {List} from 'immutable';
 import {Todo} from "../Todo";
 import {ADD_TODO,DELETE_TODO,LOAD_TODOS, TOGGLE_TODO, BACKEND_ACTION_STARTED,BACKEND_ACTION_FINISHED} from './todoActions';
+import {UiState} from "./ui-state";
 
 function todos(state: List<Todo>, action) {
     if (!state) {
@@ -33,13 +34,6 @@ export const initialUiState = {
     message: 'Ready'
 };
 
-export class UiState {
-
-    constructor(public actionOngoing: boolean, public message:string) {
-
-    }
-
-}
 
 function uiState(state: List<Todo>, action) {
     if (!state) {
@@ -47,15 +41,9 @@ function uiState(state: List<Todo>, action) {
     }
     switch(action.type) {
         case BACKEND_ACTION_STARTED:
-            return {
-                actionOngoing:true,
-                message: action.message
-            };
+            return new UiState(true, action.message);
         case BACKEND_ACTION_FINISHED:
             default:
-            return {
-                actionOngoing: false,
-                message: action.message ? action.message : initialUiState.message
-            };
+            return new UiState(false, action.message ? action.message : initialUiState.message);
     }
 }

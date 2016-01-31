@@ -13,13 +13,14 @@ import {LoadTodosAction, AddTodoAction, StartBackendAction, EndBackendAction, Ac
 import {List} from "immutable";
 import {bootstrap} from "angular2/platform/browser";
 import {initialState, dispatcher, state} from "./di-tokens";
-import {initialUiState, UiState} from "./state/todoReducers";
+import {initialUiState} from "./state/todoReducers";
 import {Subject} from "rxjs/Subject";
 import {applicationStateFactory} from "./state/applicationStateFactory";
 import {Observable} from "rxjs/Observable";
 import {ApplicationState} from "./state/application-state";
 import {Observer} from "rxjs/Observer";
 import 'rxjs/add/operator/map';
+import {UiState} from "./state/ui-state";
 
 @Component({
     selector: 'app',
