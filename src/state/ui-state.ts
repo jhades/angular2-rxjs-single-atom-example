@@ -6,3 +6,8 @@ export class UiState {
     }
 
 }
+
+export const initialUiState = {
+    actionOngoing: false,
+    message: 'Ready'
+};

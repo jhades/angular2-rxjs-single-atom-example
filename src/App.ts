@@ -12,15 +12,14 @@ import {TodoService} from "./TodoService";
 import {LoadTodosAction, AddTodoAction, StartBackendAction, EndBackendAction, Action} from "./state/todoActions";
 import {List} from "immutable";
 import {bootstrap} from "angular2/platform/browser";
-import {initialState, dispatcher, state} from "./di-tokens";
-import {initialUiState} from "./state/todoReducers";
+import {dispatcher, state, initialState} from "./di-tokens";
 import {Subject} from "rxjs/Subject";
 import {applicationStateFactory} from "./state/applicationStateFactory";
 import {Observable} from "rxjs/Observable";
 import {ApplicationState} from "./state/application-state";
 import {Observer} from "rxjs/Observer";
 import 'rxjs/add/operator/map';
-import {UiState} from "./state/ui-state";
+import {UiState, initialUiState} from "./state/ui-state";
 
 @Component({
     selector: 'app',

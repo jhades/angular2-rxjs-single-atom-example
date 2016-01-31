@@ -2,7 +2,7 @@
 import {List} from 'immutable';
 import {Todo} from "../Todo";
 import {ADD_TODO,DELETE_TODO,LOAD_TODOS, TOGGLE_TODO, BACKEND_ACTION_STARTED,BACKEND_ACTION_FINISHED} from './todoActions';
-import {UiState} from "./ui-state";
+import {UiState, initialUiState} from "./ui-state";
 
 function todos(state: List<Todo>, action) {
     if (!state) {
@@ -28,12 +28,6 @@ function toggleTodo(state, action) {
     let toggled:Todo = state.get(index);
     return state.set(index, new Todo({id:toggled.id, description:toggled.description, completed:!toggled.completed}) );
 }
-
-export const initialUiState = {
-    actionOngoing: false,
-    message: 'Ready'
-};
-
 
 function uiState(state: List<Todo>, action) {
     if (!state) {
