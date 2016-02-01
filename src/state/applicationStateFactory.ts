@@ -5,9 +5,17 @@ import {ApplicationState} from "./application-state";
 import {dispatcher} from "../di-tokens";
 import {calculateTodos, calculateUiState} from "./reducers";
 import {UiState, initialUiState} from "./ui-state";
+import {BehaviorSubject} from "rxjs/Rx";
+
+function wrapIntoBehaviorSubject(init, obs) {
+    const res = new BehaviorSubject(init);
+    obs.subscribe(s => res.next(s));
+    return res;
+}
 
 export function applicationStateFactory(initialState: ApplicationState, actions: Observable<Action>): Observable<ApplicationState> {
-    return actions.scan( (state: ApplicationState, action) => {
+
+    let appStateObservable = actions.scan( (state: ApplicationState, action) => {
 
         console.log("Processing action " + action.getName());
 
@@ -26,4 +34,5 @@ export function applicationStateFactory(initialState: ApplicationState, actions:
     } , initialState)
     .share();
 
+    return wrapIntoBehaviorSubject(initialState, appStateObservable);
 }
