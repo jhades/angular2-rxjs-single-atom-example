@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy, Inject} from 'angular2/core';
+import {Component, Input, Output, EventEmitter, Inject} from 'angular2/core';
 import {Todo} from "./Todo";
 import {List} from 'immutable';
 import {TodoService} from "./TodoService";
@@ -11,13 +11,12 @@ import {ApplicationState} from "./state/application-state";
 
 @Component({
     selector: 'todo-list',
-    changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
 
         <section id="main">
             <label for="toggle-all">Mark all as complete</label>
             <ul id="todo-list">
-                <li *ngFor="#todo of todos | async" [ngClass]="{completed: todo.completed}">
+                <li *ngFor="#todo of (todos | async);" [ngClass]="{completed: todo.completed}">
                     <div class="view">
                         <input class="toggle" type="checkbox" (change)="onToggleTodo(todo)" [checked]="todo.completed">
                         <label>{{todo.description}}</label>
@@ -35,6 +34,7 @@ export class TodoList {
                 @Inject(state) private state: Observable<ApplicationState>) {
 
     }
+
 
     get todos() {
         return this.state.map((state: ApplicationState) => {
