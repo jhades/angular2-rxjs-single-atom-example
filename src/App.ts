@@ -55,15 +55,11 @@ export class App {
     }
 
     get size() {
-        return this.state.map((state: ApplicationState) => {
-            return state.todos.size;
-        } );
+        return this.state.map((state: ApplicationState) => state.todos.size);
     }
 
     get uiStateMessage() {
-        return this.state.map((state: ApplicationState) => {
-            return state.uiState;
-        } );
+        return this.state.map((state: ApplicationState) => state.uiState.message);
     }
 
 
