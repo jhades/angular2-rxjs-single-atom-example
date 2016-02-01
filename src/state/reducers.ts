@@ -35,7 +35,7 @@ function toggleTodo(state, action) {
     return state.set(index, new Todo({id:toggled.id, description:toggled.description, completed:!toggled.completed}) );
 }
 
-function uiState(state: List<Todo>, action) {
+export function calculateUiState(state: UiState, action) {
     if (!state) {
         return initialUiState;
     }

@@ -37,7 +37,7 @@ app.route('/todo')
     .post((req, res) => {
         todos.push(req.body);
         console.log(JSON.stringify(todos));
-        setTimeout(() => res.send(), 500);
+        setTimeout(() => res.send(), 1000);
     });
 
 app.all('/bundle.js', function (req, res) {
