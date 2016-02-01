@@ -5,7 +5,7 @@ import {Todo} from "../Todo";
 export class LoadTodosAction {
 
     constructor(public todos: List<Todo>) {
-
+        debugger;
     }
 }
 

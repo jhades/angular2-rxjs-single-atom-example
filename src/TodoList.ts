@@ -3,8 +3,10 @@ import {Todo} from "./Todo";
 import {List} from 'immutable';
 import {TodoService} from "./TodoService";
 import {ToggleTodoAction, DeleteTodoAction, Action} from './state/todoActions';
-import {dispatcher} from "./di-tokens";
+import {dispatcher,state} from "./di-tokens";
 import {Observer} from "rxjs/Observer";
+import {Observable} from "rxjs/Observable";
+import {ApplicationState} from "./state/application-state";
 
 
 @Component({
@@ -12,10 +14,10 @@ import {Observer} from "rxjs/Observer";
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
 
-        <section id="main" [hidden]="todos.size === 0">
+        <section id="main">
             <label for="toggle-all">Mark all as complete</label>
             <ul id="todo-list">
-                <li *ngFor="#todo of todos;" [ngClass]="{completed: todo.completed}">
+                <li *ngFor="#todo of todos | async;" [ngClass]="{completed: todo.completed}">
                     <div class="view">
                         <input class="toggle" type="checkbox" (change)="onToggleTodo(todo)" [checked]="todo.completed">
                         <label>{{todo.description}}</label>
@@ -28,13 +30,14 @@ import {Observer} from "rxjs/Observer";
 })
 export class TodoList {
 
-    @Input() todos: List<Todo>;
-    @Output()  toggleAll: EventEmitter<any> = new EventEmitter();
-    @Output()  deleteTodo: EventEmitter<any> = new EventEmitter();
-
     constructor(private todoService: TodoService,
-                @Inject(dispatcher) private dispatcher: Observer<Action>) {
+                @Inject(dispatcher) private dispatcher: Observer<Action>,
+                @Inject(state) private state: Observable<ApplicationState>) {
 
+    }
+
+    get todos() {
+        return this.state.map((state: ApplicationState) => state.todos );
     }
 
     onToggleTodo(todo: Todo) {

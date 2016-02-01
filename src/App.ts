@@ -32,13 +32,13 @@ import './getName';
 
                 <todo-header (todo)="onAddTodo($event)"></todo-header>
 
-                <todo-list [todos]="todos"></todo-list>
+                <todo-list></todo-list>
 
-                <todo-footer [hidden]="todos.size === 0" [count]="todos.size"></todo-footer>
+                <!--<todo-footer [hidden]="(size | async) === 0" [count]="size | async"></todo-footer>-->
 
             </section>
             <footer id="info">
-                <p>{{uiState.message}}</p>
+                <p>{{uiStateMessage | async}}</p>
                 <p>Add, Remove and Complete TODOs</p>
             </footer>
         </div>
@@ -46,31 +46,21 @@ import './getName';
 })
 export class App {
 
-    todos: List<Todo> = List([]);
-    private uiState: UiState = initialUiState;
-
     constructor(@Inject(dispatcher) private dispatcher: Observer<Action>,
                 @Inject(state) private state: Observable<ApplicationState>,
                 private todoService: TodoService) {
 
-        todoService.getAllTodos()
-            .subscribe(
-                res => {
-                    todos = (<Object[]>res.json()).map((todo: any) =>
-                        new Todo({id:todo.id, description:todo.description,completed: todo.completed}));
-
-                    dispatcher.next(new LoadTodosAction(List(todos)));
-                },
-                err => console.log("Error retrieving Todos")
-            );
-
-        state.subscribe(
-            state => {
-                this.todos = state.todos;
-                this.uiState = state.uiState;
-            }
-        );
+        this.loadInitialData();
     }
+
+    get size() {
+        return this.state.map((state: ApplicationState) => state.todos.size );
+    }
+
+    get uiStateMessage() {
+        return this.state.map((state: ApplicationState) => state.uiState );
+    }
+
 
     onAddTodo(description) {
         let newTodo = new Todo({id:Math.random(), description});
@@ -87,6 +77,23 @@ export class App {
                     this.dispatcher.next(new EndBackendAction('Error occurred: '));
                 }
             );
+    }
+
+    loadInitialData() {
+
+        debugger;
+
+        this.todoService.getAllTodos()
+            .subscribe(
+                res => {
+                    let todos = (<Object[]>res.json()).map((todo: any) =>
+                        new Todo({id:todo.id, description:todo.description,completed: todo.completed}));
+
+                    this.dispatcher.next(new LoadTodosAction(List(todos)));
+                },
+                err => console.log("Error retrieving Todos")
+            );
+
     }
 
 }
