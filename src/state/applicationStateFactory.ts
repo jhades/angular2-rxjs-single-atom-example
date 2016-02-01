@@ -17,12 +17,13 @@ export function applicationStateFactory(initialState: ApplicationState, actions:
         };
 
         console.log({
-            todos: state.todos.toJS(),
-            uiState: state.uiState
+            todos: newState.todos.toJS(),
+            uiState: newState.uiState
         });
 
         return newState;
 
-    } , initialState);
+    } , initialState)
+    .share();
 
 }

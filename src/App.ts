@@ -20,6 +20,7 @@ import {ApplicationState} from "./state/application-state";
 import {Observer} from "rxjs/Observer";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/scan';
+import 'rxjs/add/operator/share';
 import {UiState, initialUiState} from "./state/ui-state";
 import './getName';
 
@@ -34,7 +35,7 @@ import './getName';
 
                 <todo-list></todo-list>
 
-                <!--<todo-footer [hidden]="(size | async) === 0" [count]="size | async"></todo-footer>-->
+                <todo-footer [hidden]="(size | async) === 0" [count]="size | async"></todo-footer>
 
             </section>
             <footer id="info">
@@ -54,11 +55,15 @@ export class App {
     }
 
     get size() {
-        return this.state.map((state: ApplicationState) => state.todos.size );
+        return this.state.map((state: ApplicationState) => {
+            return state.todos.size;
+        } );
     }
 
     get uiStateMessage() {
-        return this.state.map((state: ApplicationState) => state.uiState );
+        return this.state.map((state: ApplicationState) => {
+            return state.uiState;
+        } );
     }
 
 
@@ -80,9 +85,6 @@ export class App {
     }
 
     loadInitialData() {
-
-        debugger;
-
         this.todoService.getAllTodos()
             .subscribe(
                 res => {

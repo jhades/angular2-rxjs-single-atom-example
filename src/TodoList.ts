@@ -17,7 +17,7 @@ import {ApplicationState} from "./state/application-state";
         <section id="main">
             <label for="toggle-all">Mark all as complete</label>
             <ul id="todo-list">
-                <li *ngFor="#todo of todos | async;" [ngClass]="{completed: todo.completed}">
+                <li *ngFor="#todo of todos | async" [ngClass]="{completed: todo.completed}">
                     <div class="view">
                         <input class="toggle" type="checkbox" (change)="onToggleTodo(todo)" [checked]="todo.completed">
                         <label>{{todo.description}}</label>
@@ -37,7 +37,10 @@ export class TodoList {
     }
 
     get todos() {
-        return this.state.map((state: ApplicationState) => state.todos );
+        return this.state.map((state: ApplicationState) => {
+            debugger;
+            return state.todos;
+        });
     }
 
     onToggleTodo(todo: Todo) {
