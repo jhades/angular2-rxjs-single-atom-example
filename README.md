@@ -25,7 +25,7 @@ Then in another terminal window, run the node.js server that will both serve the
     
 You can access the application in the followwing Url:
 
-    [http://localhost:8080/](http://localhost:8080)
+[http://localhost:8080/](http://localhost:8080)
 
 You can add, remove or toggle a TODO item. Notice when adding the Todo that the message panel in the footer shows the status of what is going on.
 
