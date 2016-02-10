@@ -1,4 +1,4 @@
-# Angular 2 RxJs Sample App
+# Angular 2 RxJs Redux-like sample App
 
 This repository is an example of how to build a Flux/Redux-like Angular 2 application using RxJs and Functional Reactive Programming. This application has a single atom of state, and is based upon two constructs:
 
